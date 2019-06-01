@@ -1,0 +1,16 @@
+{% extends "forum/base.html" %}
+{% block content %}
+    <h1> User {{ users.first.name }} </h1>
+    <!–– Loop to print posts ––>
+    {% for post in posts %}
+        <h2> {{ post.title }}</h2>
+        <p> {{ post.poster }} on {{ post.date_posted }} </p>
+        {% if post.image != '' %}
+            <p> {{ post.image }} </p>
+        {% endif %}
+        {% if post.content != '' %}
+            <p> {{ post.content }} </p>
+        {% endif %}
+        <p> {{ post.rating }} </p>
+    {% endfor %}
+{% endblock content %}
