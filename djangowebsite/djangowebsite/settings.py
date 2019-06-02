@@ -22,6 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '10=7wn8(6n3=z*gfg62cl0h)(*aj1o&9mh^_-#eqcu4#hx$$i9'
 
+# Encryption key
+FIELD_ENCRYPTION_KEY = '8DBHRg8P_024jl-KKH4fElPFIT8ThUNoxszSLdMXEoM='
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -38,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'forum.apps.ForumConfig',
+    'encrypted_model_fields',
 ]
 
 MIDDLEWARE = [

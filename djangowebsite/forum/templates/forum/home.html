@@ -1,6 +1,12 @@
 {% extends "forum/base.html" %}
 {% block content %}
-    <h1> User {{ users.first.name }} </h1>
+    <!–– Loop to print Users ––>
+    {% for user in users %}
+        <h2> User {{ user.name }}</h2>
+        <p> Password {{ user.password }} </p>
+        <p> {{ user.image }} </p>
+    {% endfor %}
+
     <!–– Loop to print posts ––>
     {% for post in posts %}
         <h2> {{ post.title }}</h2>
@@ -12,5 +18,16 @@
             <p> {{ post.content }} </p>
         {% endif %}
         <p> {{ post.rating }} </p>
+    {% endfor %}
+
+    <!–– Loop to print Comments ––>
+    {% for comment in comments %}
+        <h2> Comment {{ comment.id }} by {{ comment.poster }} on post {{ comment.postid }} </h2>
+        <p> {{ comment.content }} </p>
+    {% endfor %}
+
+    <!–– Loop to print Tags ––>
+    {% for tag in tags %}
+        <h2> Tag {{ tag.text }} </h2>
     {% endfor %}
 {% endblock content %}
