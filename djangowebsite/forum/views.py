@@ -16,8 +16,13 @@ def home(request):
     return render(request, 'forum/home.html', content)
 
 def profile(request):
+    rateObjects = Rate.objects.filter(user="test", rate=True)
+    posts = []
+    for i in rateObjects:
+        posts.append(Post.objects.filter(i.contentid))
     content = {
-        'user': User.objects.filter(name="test")
+        'user': User.objects.filter(name="test"),
+        'rated': posts,
     }
 
     return render(request, 'forum/profile.html', content)

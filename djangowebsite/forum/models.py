@@ -20,7 +20,7 @@ class Post(models.Model):
     rating = models.IntegerField(default=0)
     tags = models.CharField(max_length=1000, default='')
     def __str__(self):
-        return self.title
+        return self.id
 
 class Comment(models.Model):
     id = models.AutoField(max_length=100, primary_key=True)
