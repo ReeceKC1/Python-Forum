@@ -9,13 +9,10 @@ class RegisterForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(
                 attrs={
-                'class': 'User'#form-control widget to use,
-                ,
-                'placeholder': 'Username'
+                    'placeholder': 'Username'
                 }),
             'password': forms.TextInput(
                 attrs={
-                'placeholder': 'Password'
-                }
-            )
+                    'placeholder': 'Password'
+                }),
         }

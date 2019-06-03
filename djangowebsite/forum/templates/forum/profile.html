@@ -1,4 +1,17 @@
 {% extends "forum/base.html" %}
 {% block content %}
-    <h1> Profile </h1>
+<center>
+    <div class="profile-page">
+        {% if image != '' %}
+            <fieldset class="profile-image mb-4">
+                {{ user.first.image }}
+            </fieldset>
+        {% else %}
+            <img src="{{ STATIC_URL }}image.jpg">
+        {% endif %}
+        <fieldset class="profile-name mb-4">
+            <p> {{ user.first.name }} </p>
+        </fieldset>
+    </div>
+</center>
 {% endblock content %}

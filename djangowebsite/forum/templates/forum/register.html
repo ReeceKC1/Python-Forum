@@ -5,16 +5,15 @@
         <form method="POST">
             {% csrf_token %}
                 <fieldset class="form-group">
-                    <legend class="border-bottom mb-4">Register</legend>
-                    <p>{{ form.errors }}</p>
+                    <p class="mb-1">Register</p>
+                   <!-- <p>{{ form.errors }}</p> -->
                 </fieldset>
-                <div class="stuff">
-
-
+                <fieldset class="form-image mb-4">
+                    {{ form.image }}
+                </fieldset>
                 <fieldset class="form-name mb-4">
                     {{ form.name }}
                 </fieldset>
-</div>
                 <fieldset class="form-password mb-4">
                     {{ form.password }}
                 </fieldset>
@@ -22,28 +21,26 @@
                     <button type="button" class="btn btn-secondary" name="submit">Register</button>
                 </div>
                 <small class="text-muted">
-                    Already have an account? <a class="ml-2" href="#">Login</a>
+                    Already have an account?<a class="ml-2" href="#">Login</a>
                 </small>
-
         </form>
     </div>
 </center>
-
 <style media="screen">
+    .form-group{
+        font-size: 32px;
+    }
     .submit-button{
         background-color: hsla(210,12%,16%,1);
     }
-    .form-group{
-        ;
+    .form-image{
+        display:inline-block;
+        margin:4px;
+        padding: 4px 16px;
+        background-color: #FFFFFF;
+        border:solid 1px #666F77;
+        border-radius: 6px;
+        color:#666F77;
     }
-    .c-error input{
-  background: #c51244 !important;
-  padding: 10px !important;
-  border-radius: 0 !important;
-  position: relative;
-  display: inline-block !important;
-  box-shadow: 1px 1px 1px #aaaaaa;
-  margin-top: 10px;
-}
 </style>
- {% endblock content %}
+{% endblock content %}

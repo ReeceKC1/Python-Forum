@@ -16,9 +16,11 @@ def home(request):
     return render(request, 'forum/home.html', content)
 
 def profile(request):
-    #display direct HttpResponse
-    #return HttpResponse('<h1>Profile</h1>')
-    return render(request, 'forum/profile.html')
+    content = {
+        'user': User.objects.filter(name="test")
+    }
+
+    return render(request, 'forum/profile.html', content)
 
 def register(request):
     #get display page
