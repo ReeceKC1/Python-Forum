@@ -1,33 +1,141 @@
 {% extends "forum/base.html" %}
+{% load static %}
 {% block content %}
     <!–– Loop to print Users ––>
     {% for user in users %}
-        <h2> User {{ user.name }}</h2>
+        <h2> User {{ user.username }}</h2>
         <p> Password {{ user.password }} </p>
         <p> {{ user.image }} </p>
     {% endfor %}
 
     <!–– Loop to print posts ––>
+
+    <!-- HTML FOR POST OBJECT -->
     {% for post in posts %}
-        <h2> {{ post.title }}</h2>
-        <p> {{ post.poster }} on {{ post.date_posted }} </p>
-        {% if post.image != '' %}
-            <p> {{ post.image }} </p>
-        {% endif %}
-        {% if post.content != '' %}
-            <p> {{ post.content }} </p>
-        {% endif %}
-        <p> {{ post.rating }} </p>
+    <div class="post-obj">
+            <div class="post-rates">
+                <button type="submit" value="" class="uprate-button">^</button>
+                <p><button class="downrate-button">^</button></p>
+            </div>
+            <div class="post-rate">
+                <br/>
+                {{ post.rating }}
+            </div>
+            <p class="post-data">
+                <b class="post-title"> {{ post.title }} </b>
+                <small>
+                    by {{ post.poster }} on {{ post.date_posted }}
+                </small>
+            </p>
+            <img class="post-image" src="{{ post.image.url }}">
+            <a class="post-link" href="{% url 'forum-post' post.id %}"><span></span></a>
+    </div>
     {% endfor %}
 
+
     <!–– Loop to print Comments ––>
+    <div class="comment-obj">
+
+    </div>
     {% for comment in comments %}
-        <h2> Comment {{ comment.id }} by {{ comment.poster }} on post {{ comment.postid }} </h2>
-        <p> {{ comment.content }} </p>
+        <div class="comment-obj">
+            <u><small class="comment-poster">
+                Comment by {{ comment.poster }}
+            </small></u><br/>
+            <fieldset class="comment-content">
+                {{ comment.content }}
+            </fieldset>
+        </div>
     {% endfor %}
 
     <!–– Loop to print Tags ––>
     {% for tag in tags %}
         <h2> Tag {{ tag.text }} </h2>
     {% endfor %}
+
+<style>
+    /*CSS FOR POST OBJECTS*/
+    .post-obj{
+        position: relative;
+        border: 2px solid grey;
+        width: 500px;
+        height: 60px;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+    .post-data{
+        padding-left: 5px;
+        padding-right: 15px;
+        border-radius: 15px;
+        margin-top: 5px;
+    }
+    .post-title{
+        font-size: 24px;
+        padding-left: 5px;
+    }
+    .post-image{
+        float: right;
+        height: 54px;
+        width: 54px;
+        margin-top: -56px;
+        margin-right: 1px;
+    }
+    .post-rate{
+        float: left;
+        padding-left: 3px;
+        padding-right: 3px;
+        line-height: 18px;
+    }
+    /*BUTTONS*/
+    .post-rates{
+        float: left;
+        height: 55px;
+        left: 15px;
+    }
+    .uprate-button,.downrate-button{
+        padding-left: 2px;
+        padding-right: 2px;
+        height: 28px;
+        background: hsla(210,12%,16%,1);
+        color: white;
+        border: none;
+    }
+    .downrate-button{
+        transform: scale(1,-1);
+    }
+    .uprate-button:active, .uprate-button:hover, .downrate-button:active, .downrate-button:hover{
+        background: white;
+        color: black;
+    }
+    .post-link{
+        position:absolute;
+        width:97%;
+        height:100%;
+        top:0;
+        right: 0;
+
+        z-index: 1;
+        /* background-image: url('empty.gif'); */
+    }
+
+    /*CSS FOR COMMENT OBJECTS*/
+    .comment-obj{
+        border: solid grey 1px;
+        box-sizing: border-box;
+        width: 300px;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-bottom: 5px;
+        line-height: 17px;
+    }
+    .comment-poster{
+
+    }
+    .comment-content{
+
+    }
+    .br{
+        line-height: 0px;
+    }
+</style>
 {% endblock content %}

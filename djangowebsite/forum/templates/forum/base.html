@@ -20,12 +20,20 @@
         {% endif %}
     </head>
 
-    <style>
-        body {
-            background-color: hsla(210,12%,16%,1);
-            color: white;
-        }
-    </style>
+    <div class="navigation-bar">
+        <a class="home-ref" href="/">Home</a>
+        {% if user.is_authenticated %}
+            <a class="logout-ref" href="/logout/">Logout</a>
+            <a class="profile-ref" href="/profile/">Profile</a>
+            <a class="createpost-ref" href="/createPost/">Create a Post</a>
+            <img class="nav-image" src="{{ user.image.url }}">
+        {% else %}
+            <a class="login-ref" href="/login/">Login</a>
+            <a class="register-ref" href="/register/">Register</a>
+            <img class="nav-image" src="{% static 'forum/image.jpg' %}">
+        {% endif %}
+        <a class="settings-ref" href="">Settings</a>
+    </div>
 
     <body>
         <div class="container">
@@ -45,4 +53,39 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
+
+    <style>
+        body {
+            background-color: hsla(210,12%,16%,1);
+            color: white;
+            margin-top: 50px;
+        }
+        .navigation-bar{
+            top: 0;
+            overflow: hidden;
+            width: 100%;
+            position: fixed;
+            font-size: 30px;
+            color: white;
+            background-color: hsla(210,12%,16%,1);
+            height: 50px;
+            vertical-align: middle;
+            border-bottom: solid 1px grey;
+        }
+        .home-ref{
+            margin-left: 20px;
+        }
+        .settings-ref{
+            float: right;
+            margin-right: 20px;
+        }
+        .nav-image{
+            float: right;
+            height: 48px;
+            width: 48px;
+            margin-right: 1px;
+            border-radius: 50%;
+        }
+    </style>
+
 </html>

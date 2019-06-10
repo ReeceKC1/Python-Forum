@@ -1,40 +1,100 @@
 {% extends "forum/base.html" %}
+{% load static %}
 {% block content %}
-<center>
-    <div class="profile-page">
-        <fieldset class="profile-image mb-4">
-        {% if image != '' %}
-                {{ user.first.image }}
-        {% else %}
-            <img src="{{ STATIC_URL }}image.jpg">
-        {% endif %}
+    <div class="profile-page" align="center">
+        <fieldset>
+            <img class="profile-image" src="{{ profileuser.image.url }}">
         </fieldset>
-        <fieldset class="profile-name mb-4">
-            <p> {{ user.first.name }} </p>
+        <fieldset class="profile-name">
+            <p> {{ profileuser.username }} </p>
         </fieldset>
     </div>
-    <div class="profile-likes">
-        {% for post in rated %}
-            <h2> {{ post.title }}</h2>
-            <p> {{ post.poster }} on {{ post.date_posted }} </p>
-            {% if post.image != '' %}
-                <p> {{ post.image }} </p>
-            {% endif %}
-            {% if post.content != '' %}
-                <p> {{ post.content }} </p>
-            {% endif %}
-            <p> {{ post.rating }} </p>
-        {% endfor %}
+
+    <center>
+    <!-- HTML FOR POST OBJECT -->
+    {% for post in rated %}
+    <div class="profile-rates">
+            <div class="post-rates">
+                <button class="uprate-button">^</button>
+                <p><button class="downrate-button">^</button></p>
+            </div>
+            <div class="post-rate">
+                <p></p>
+                {{ post.rating }}
+            </div>
+            <p class="post-data">
+                <b class="post-title"> {{ post.title }} </b>
+                <small>
+                    by {{ post.poster }} on {{ post.date_posted }}
+                </small>
+            </p>
+            <img class="post-image" src="{% static 'forum/image.jpg' %}">
     </div>
-</center>
+    {% endfor %}
+    </center>
+
+
 <style>
     .profile-name{
         font-size: 48px;
+        margin-bottom: 20px;
     }
     .profile-image{
         height: 200px;
         width: 200px;
         border-radius: 50%;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+    /*CSS FOR POST OBJECTS*/
+    .profile-rates{
+        border: 2px solid grey;
+        width: 500px;
+        height: 60px;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+    .post-data{
+        padding-left: 5px;
+        padding-right: 15px;
+        border-radius: 15px;
+    }
+    .post-title{
+        font-size: 24px;
+        padding-left: 5px;
+    }
+    .post-image{
+        float: right;
+        height: 54px;
+        width: 54px;
+        margin-top: -51px;
+        margin-right: 1px;
+    }
+    .post-rate{
+        float: left;
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+    /*BUTTONS*/
+    .post-rates{
+        float: left;
+        height: 55px;
+        left: 15px;
+    }
+    .uprate-button,.downrate-button{
+        padding-left: 2px;
+        padding-right: 2px;
+        height: 28px;
+        background: hsla(210,12%,16%,1);
+        color: white;
+        border: none;
+    }
+    .downrate-button{
+        transform: scale(1,-1);
+    }
+    .uprate-button:active, .uprate-button:hover, .downrate-button:active, .downrate-button:hover{
+        background: white;
+        color: black;
     }
 </style>
 {% endblock content %}

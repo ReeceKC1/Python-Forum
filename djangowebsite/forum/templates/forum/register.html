@@ -1,46 +1,50 @@
 {% extends "forum/base.html" %}
+{% load widget_tweaks %}
 {% block content %}
 <center>
     <div class="register-content">
-        <form method="POST">
+        <form method="POST" enctype='multipart/form-data'>
             {% csrf_token %}
-                <fieldset class="form-group">
-                    <p class="mb-1">Register</p>
-                   <!-- <p>{{ form.errors }}</p> -->
-                </fieldset>
-                <fieldset class="form-image mb-4">
-                    {{ form.image }}
-                </fieldset>
-                <fieldset class="form-name mb-4">
-                    {{ form.name }}
-                </fieldset>
-                <fieldset class="form-password mb-4">
-                    {{ form.password }}
-                </fieldset>
-                <div class="form-group">
-                    <button type="button" class="btn btn-secondary" name="submit">Register</button>
-                </div>
+                <p class="register-heading">Register</p>
+                {{ form.image }} <br/>
+                {{ form.username }}<br/>
+                <input type="password" class="register-password" placeholder="Password" id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}"/> <br/>
+                <button class="btn btn-secondary" type="submit">Register</button> <br/>
                 <small class="text-muted">
-                    Already have an account?<a class="ml-2" href="#">Login</a>
+                    Already have an account? <a class="regitser-link-login" href="{% url 'forum-login' %}">Login</a>
                 </small>
         </form>
     </div>
 </center>
 <style media="screen">
-    .form-group{
+    .error1, .errors-register-password{
+        width: 320px;
+        list-style: none;
+    }
+    .btn{
+        margin-bottom: 10px;
+    }
+    .register-heading{
         font-size: 32px;
     }
-    .submit-button{
-        background-color: hsla(210,12%,16%,1);
-    }
-    .form-image{
+    .register-image{
         display:inline-block;
-        margin:4px;
-        padding: 4px 16px;
+        padding: 4px 12px;
         background-color: #FFFFFF;
         border:solid 1px #666F77;
         border-radius: 6px;
         color:#666F77;
     }
+    .register-image, .register-name, .register-password{
+        margin-bottom: 25px;
+    }
+    .register-name, .register-password{
+        width: 320px;
+        height: 35px;
+        border:solid 1px #666F77;
+        border-radius: 6px;
+        padding-left: 10px;
+    }
+
 </style>
 {% endblock content %}

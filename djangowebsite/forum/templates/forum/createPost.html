@@ -1,0 +1,51 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<center>
+    <div class="postcreate-content">
+        <form method="POST" enctype='multipart/form-data'>
+            {% csrf_token %}
+            <p class="postcreate-heading">Create a Post</p>
+            {{ form.errors }}
+            {{ form.title }} <br/>
+            {{ form.image }} <br/>
+            {{ form.tags }} <br/>
+            {{ form.content }} <br/>
+            <button class="btn btn-secondary" type="submit">Create</button> <br/>
+        </form>
+    </div>
+</center>
+<style media="screen">
+    .btn{
+        margin-bottom: 25px;
+    }
+    .postcreate-heading{
+        font-size: 32px;
+    }
+    .createpost-image{
+        display:inline-block;
+        padding: 4px 12px;
+        background-color: #FFFFFF;
+        border:solid 1px #666F77;
+        border-radius: 6px;
+        color:#666F77;
+    }
+    .createpost-title, .createpost-image, .createpost-content, .createpost-tags{
+        margin-bottom: 25px;
+    }
+    .createpost-title, .createpost-content, .createpost-tags{
+        width: 320px;
+        border:solid 1px #666F77;
+        border-radius: 6px;
+        padding-left: 10px;
+    }
+    .createpost-title{
+        height: 35px;
+    }
+    .createpost-content{
+        height: 500px;
+     }
+    .createpost-tags{
+        height: 100px;
+    }
+</style>
+{% endblock content %}
