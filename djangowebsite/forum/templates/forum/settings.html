@@ -1,0 +1,11 @@
+{% extends "forum/base.html" %}
+{% block content %}
+{{ user.username }}
+<form method="POST" enctype='multipart/form-data'>
+    {% csrf_token %}
+    <input class="new-image-input"type="file" name="new-image">
+    <input class="old-password-input" type="text" name="old-password">
+    <input class="new-password-input" type="text" name="new-password">
+<button class="btn btn-secondary" type="submit">Register</button> <br/>
+{{ content }}
+{% endblock %}

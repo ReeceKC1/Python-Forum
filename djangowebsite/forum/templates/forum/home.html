@@ -1,22 +1,17 @@
 {% extends "forum/base.html" %}
 {% load static %}
 {% block content %}
-    <!–– Loop to print Users ––>
-    {% for user in users %}
-        <h2> User {{ user.username }}</h2>
-        <p> Password {{ user.password }} </p>
-        <p> {{ user.image }} </p>
-    {% endfor %}
 
-    <!–– Loop to print posts ––>
-
-    <!-- HTML FOR POST OBJECT -->
+<div class="home-posts">
+    <form method="POST">
+    {% csrf_token %}
+    <div class="filter">
+        <button class="filter-button" type="submit">Filter</button>
+        <input class="filter-input" type="text" name="filter">
+    </div>
     {% for post in posts %}
     <div class="post-obj">
-            <div class="post-rates">
-                <button type="submit" value="" class="uprate-button">^</button>
-                <p><button class="downrate-button">^</button></p>
-            </div>
+            <button type="submit" value="" class="uprate-button">^</button>
             <div class="post-rate">
                 <br/>
                 {{ post.rating }}
@@ -27,58 +22,82 @@
                     by {{ post.poster }} on {{ post.date_posted }}
                 </small>
             </p>
+            {% if post.image %}
             <img class="post-image" src="{{ post.image.url }}">
+            {% endif %}
             <a class="post-link" href="{% url 'forum-post' post.id %}"><span></span></a>
     </div>
     {% endfor %}
+</div>
 
+<div class="home-data">
+    Users: {{ users }}
+</div>
 
-    <!–– Loop to print Comments ––>
-    <div class="comment-obj">
-
-    </div>
-    {% for comment in comments %}
-        <div class="comment-obj">
-            <u><small class="comment-poster">
-                Comment by {{ comment.poster }}
-            </small></u><br/>
-            <fieldset class="comment-content">
-                {{ comment.content }}
-            </fieldset>
-        </div>
-    {% endfor %}
-
-    <!–– Loop to print Tags ––>
-    {% for tag in tags %}
-        <h2> Tag {{ tag.text }} </h2>
-    {% endfor %}
 
 <style>
+    .filter{
+        width: 100%;
+        margin-bottom: 2px;
+        margin-top: 2px;
+    }
+    .filter-input{
+        width: 85%;
+    }
+    .filter-button{
+        width: 14%;
+        padding: 0px;
+        border: 0px;
+        background: hsla(210,12%,16%,1);
+        color: white;
+        font-size: 20px;
+    }
+
+    .home-posts{
+        width: 80%;
+        float: left;
+    }
+    .home-data{
+        width: 19%;
+        height: 500px;
+        float: right;
+        border: 1px solid grey;
+    }
+
+
+
+
+
     /*CSS FOR POST OBJECTS*/
     .post-obj{
         position: relative;
         border: 2px solid grey;
-        width: 500px;
-        height: 60px;
+        width: 100%;
+        /* height: 2.5%; */
         text-align: left;
         margin-bottom: 5px;
+        overflow: hidden;
+        white-space: nowrap;
     }
     .post-data{
         padding-left: 5px;
         padding-right: 15px;
         border-radius: 15px;
         margin-top: 5px;
+
     }
     .post-title{
         font-size: 24px;
         padding-left: 5px;
     }
     .post-image{
-        float: right;
-        height: 54px;
-        width: 54px;
-        margin-top: -56px;
-        margin-right: 1px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 10%;
+        object-fit: cover;
+        z-index: 1;
     }
     .post-rate{
         float: left;
@@ -87,23 +106,17 @@
         line-height: 18px;
     }
     /*BUTTONS*/
-    .post-rates{
+    .uprate-button{
         float: left;
-        height: 55px;
         left: 15px;
-    }
-    .uprate-button,.downrate-button{
         padding-left: 2px;
         padding-right: 2px;
-        height: 28px;
+        height: 100%;
         background: hsla(210,12%,16%,1);
         color: white;
         border: none;
     }
-    .downrate-button{
-        transform: scale(1,-1);
-    }
-    .uprate-button:active, .uprate-button:hover, .downrate-button:active, .downrate-button:hover{
+    .uprate-button:active, .uprate-button:hover{
         background: white;
         color: black;
     }
@@ -113,29 +126,8 @@
         height:100%;
         top:0;
         right: 0;
-
-        z-index: 1;
-        /* background-image: url('empty.gif'); */
+        z-index: 2;
     }
 
-    /*CSS FOR COMMENT OBJECTS*/
-    .comment-obj{
-        border: solid grey 1px;
-        box-sizing: border-box;
-        width: 300px;
-        padding-left: 5px;
-        padding-right: 5px;
-        padding-bottom: 5px;
-        line-height: 17px;
-    }
-    .comment-poster{
-
-    }
-    .comment-content{
-
-    }
-    .br{
-        line-height: 0px;
-    }
 </style>
 {% endblock content %}

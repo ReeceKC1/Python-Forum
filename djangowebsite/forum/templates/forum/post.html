@@ -1,9 +1,109 @@
 {% extends "forum/base.html" %}
 {% block content %}
 
- {{ post.title }}
+    <div class="post-details">
+        <img class="post-user-image" src="{{ userimage.url }}">
+        <b class="post-title"> {{ post.title }} </b>
+        <small> by {{ post.poster }} on {{ post.date_posted }}</small>
+        <p class="post-content"> {{ post.content }} </p>
+        {% if post.image %}
+        <center>
+            <img class="post-image" src="{{ post.image.url }}">
+        </center>
+        {% endif %}
+    </div>
+    {% if user.is_authenticated %}
+    <center>
+    <div class="enter-comment">
+        <form  method="POST" enctype='multipart/form-data'>
+            {% csrf_token %}
+        <button class="comment-submit" type="submit">Comment</button>
+        {{ form.content }}
+        </form>
+    </div>
+    </center>
+    {% endif %}
+
+    {% for comment in comments %}
+    <div class="comment">
+        <img class="comment-image" src="{{ comment.1.url }}">
+        <div class="comment-body">
+            <small>by {{ comment.0.poster }}</small><br/>
+            {{ comment.0.content }}
+        </div>
+
+    </div>
+    {% endfor %}
 
 <style>
+    .post-details{
+        /* border: 2px solid grey; */
+        border-radius: 6px;
+        margin-bottom: 2px;
+    }
+    .post-user-image{
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
+        margin-top: 2.5%;
+        margin-bottom: 10px;
+        margin-left: 2.5%;
+        object-fit: cover;
+    }
+    .post-title{
+        font-size: 24px;
+    }
+    .post-content{
+        margin-left: 2.5%;
+        margin-right: 2.5%;
+        word-wrap: break-word;
+    }
+    .post-image{
+        align: center;
+        width: 95%;
+        margin-bottom: 20px;
+        margin-left: 2.5%;
+        margin-right: 2.5%;
+        object-fit: cover;
+    }
 
+    .enter-comment{
+        padding-bottom: 10px;
+        padding-top: 10px;
+        width: 95%;
+    }
+    .comment-data{
+        width: 80%;
+    }
+    .comment-submit{
+        width: 19%;
+        padding: 0px;
+        border: 0px;
+        background: hsla(210,12%,16%,1);
+        color: white;
+        font-size: 20px;
+    }
+
+    .comment{
+        /* border: 1px solid grey;
+        border-radius: 6px; */
+        margin-bottom: 10px;
+        width: 100%;
+        margin-left: 2.5%;
+        margin-right: 2.5%
+    }
+    .comment-image{
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        float: left;
+        object-fit: cover;
+    }
+    .comment-body{
+        width: 100%;
+        padding-left: 50px;
+        padding-right: 10px;
+        word-wrap: break-word;
+    }
 </style>
 {% endblock content %}

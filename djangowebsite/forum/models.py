@@ -15,7 +15,7 @@ class Post(models.Model):
     id = models.AutoField(max_length=100, primary_key=True)
     poster = models.CharField(max_length=32)
     title = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='post_image', default='default.jpg')
+    image = models.ImageField(upload_to='post_image',blank=True)
     content = models.TextField(blank=True, default='')
     date_posted = models.DateTimeField(default=timezone.now)
     rating = models.IntegerField(default=0)

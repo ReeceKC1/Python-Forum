@@ -21,18 +21,23 @@
     </head>
 
     <div class="navigation-bar">
-        <a class="home-ref" href="/">Home</a>
+        <img class="forum-image" src="{% static 'forum/forum-image.jpg' %}">
+        <b class="forum-name"> Forum Page </b>
+
+        <a href="/settings/"><img class="settings-icon" src="{% static 'forum/settings.png' %}"> </a>
+
         {% if user.is_authenticated %}
-            <a class="logout-ref" href="/logout/">Logout</a>
-            <a class="profile-ref" href="/profile/">Profile</a>
-            <a class="createpost-ref" href="/createPost/">Create a Post</a>
-            <img class="nav-image" src="{{ user.image.url }}">
+            <a href="/profile/"><img class="nav-profile-image" src="{{ user.image.url }}"></a>
+            <a class="logout-ref" href="/logout/"><img class="logout-icon" src="{% static 'forum/logout.png' %}"></a>
+            <a class="createpost-ref" href="/createPost/"><img class="create-icon" src="{% static 'forum/create.png' %}"></a>
+
         {% else %}
-            <a class="login-ref" href="/login/">Login</a>
-            <a class="register-ref" href="/register/">Register</a>
-            <img class="nav-image" src="{% static 'forum/image.jpg' %}">
+            <a href="/profile/"><img class="nav-profile-image" src="{% static 'forum/user.png' %}"></a>
+            <!-- <a class="register-ref" href="/register/">Register</a> -->
+            <a class="login-ref" href="/login/"><img class="login-icon" src="{% static 'forum/login.png' %}"></a>
+
         {% endif %}
-        <a class="settings-ref" href="">Settings</a>
+        <a href="/"><img class="home-icon" src="{% static 'forum/home.png' %}"></a>
     </div>
 
     <body>
@@ -54,11 +59,17 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
 
+    <div class="bottom-area">
+
+    </div>
+
     <style>
-        body {
+        body{
             background-color: hsla(210,12%,16%,1);
             color: white;
             margin-top: 50px;
+            margin-bottom: 20px;
+            font-size: 20px;
         }
         .navigation-bar{
             top: 0;
@@ -68,23 +79,48 @@
             font-size: 30px;
             color: white;
             background-color: hsla(210,12%,16%,1);
-            height: 50px;
+            height: 53px;
             vertical-align: middle;
             border-bottom: solid 1px grey;
+            z-index: 100;
         }
-        .home-ref{
-            margin-left: 20px;
-        }
-        .settings-ref{
+        .logout-icon, .create-icon, .create-icon, .login-icon, .home-icon, .settings-icon{
             float: right;
-            margin-right: 20px;
+            margin-right: 10px;
+            height: 48px;
+            width: 48px;
         }
-        .nav-image{
+        .nav-profile-image{
             float: right;
             height: 48px;
             width: 48px;
-            margin-right: 1px;
+            margin-right: 10px;
             border-radius: 50%;
+            object-fit: cover;
+        }
+        .forum-image{
+            height: 48px;
+            width: 48px;
+            margin-left: 10px;
+            float: left;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .forum-name{
+            margin-left: 10px;
+        }
+        .bottom-area{
+            bottom: 0;
+            overflow: hidden;
+            width: 100%;
+            position: fixed;
+            font-size: 12px;
+            color: white;
+            background-color: hsla(210,12%,16%,1);
+            height: 20px;
+            vertical-align: middle;
+            border-top: solid 1px grey;
+            z-index: 100;
         }
     </style>
 

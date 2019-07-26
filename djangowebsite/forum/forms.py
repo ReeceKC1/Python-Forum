@@ -1,5 +1,5 @@
 from django import forms
-from .models import ForumUser, Post
+from .models import ForumUser, Post, Comment
 from django.utils.translation import gettext_lazy as _
 
 class RegisterForm(forms.ModelForm):
@@ -22,15 +22,6 @@ class RegisterForm(forms.ModelForm):
                 attrs={
                     'class': 'register-image',
                 }),
-        }
-        labels = {
-            'username': 'Writer',
-        }
-
-        error_messages = {
-        'username': {
-            'required': 'Please let us know what to call you!'
-        }
         }
 
 class ModifyUserForm(forms.ModelForm):
@@ -72,3 +63,16 @@ class PostForm(forms.ModelForm):
                     'class': 'createpost-image',
                 }),
         }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            'content',
+        ]
+        widgets = {
+            'content': forms.TextInput(
+                attrs={
+                    'class': 'comment-data',
+                }),
+       }
