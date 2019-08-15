@@ -5,7 +5,14 @@ from .forms import *
 from django.views.generic import DetailView
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import login
-#from django.http import HttpResponse
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.views.generic import RedirectView
+from django.db.models import F
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 #Homepage with posts and filter bar
 def home(request):
@@ -13,15 +20,25 @@ def home(request):
         filter = request.POST.get('filter',None)
         if filter != '' and filter != ' ':
             posts = Post.objects.filter(tags__contains=filter)
+        else:
+            posts = Post.objects.all()
 
     else:
         posts = Post.objects.all()
+    users = [
+        (obj, Post.objects.filter(poster=obj.username).count())
+        for obj in
+        ForumUser.objects.all()
+        ]
+    users.sort(key = lambda x: x[1], reverse=True)
     #Content to pass in
     content = {
-        'users': ForumUser.objects.all().count(),
+        'users': users,
         'posts': posts,
         'comments': Comment.objects.all(),
         'tags': Tag.objects.all(),
+        'totalusers': ForumUser.objects.count(),
+        'totalposts': Post.objects.count(),
     }
     #displaying a view
     return render(request, 'forum/home.html', content)
@@ -39,10 +56,22 @@ def profile(request):
     ]
     content = {
         'profileuser': ForumUser.objects.get(username=request.user.username),
-        'rated': posts,
+        'rated': posts + list(Post.objects.filter(poster=request.user.username)),
     }
-    #Displaying page
+    #Displaying pag e
     return render(request, 'forum/profile.html', content)
+
+def otherprofile(request, pk):
+    try:
+        posts = Post.objects.filter(poster=pk)
+    except Post.DoesNotExist:
+        posts = None
+
+    content = {
+        'otheruser': ForumUser.objects.get(username=pk),
+        'posts': posts,
+    }
+    return render(request, 'forum/otherprofile.html', content)
 
 #post detail page with comments and a form to add comments
 def postview(request, pk):
@@ -101,7 +130,8 @@ def createPost(request):
     if form.is_valid():
         post = form.save(commit=False)
         post.poster = request.user.username
-        post.tags = post.tags + ' ' + post.poster
+        post.tags = post.tags + ' ' + post.poster + ' ' + post.title
+        post.rating = 0
         post.save()
         return redirect('forum-home')
     #Creating fresh form if not valid
@@ -114,14 +144,80 @@ def settings(request):
     if not request.user.is_authenticated:
         return redirect('forum-login')
 
-    content = {'content':'yo'}
+    content = None
 
     if request.method == 'POST':
-        oldpassword = request.POST.get('old-password',None)
+        oldpassword = make_password(request.POST.get('old-password',None))
         newpassword = request.POST.get('new-password',None)
+        newpasswordconf = request.POST.get('new-password-conf',None)
         newimage = request.POST.get('new-image',request.FILES)
-        content = {'content': newimage}
 
+
+        if not oldpassword == ForumUser.objects.get(username=request.user.username).password:
+            content = {'error': 'Password is incorrect'}
+            return render(request, 'forum/settings.html',content)
+        if not newpassword == newpasswordconf:
+            content = {'error': 'Passwords do not match'}
+            return render(request, 'forum/settings.html',content)
+
+        tempuser = ForumUser.objects.get(username=request.user.username)
+        tempuser.password = newpassword
+        tempuser.image = newimage
+        tempuser.save()
 
 
     return render(request, 'forum/settings.html',content)
+
+# from rest_framework.views import APIView
+# from rest_framework.response import Response
+# from rest_framework import authentication, permissions
+# from django.contrib.auth.models import User
+#
+# class UpRateToggle(APIView):
+#     """
+#     View to list all users in the system.
+#
+#     * Requires token authentication.
+#     * Only admin users are able to access this view.
+#     """
+#     authentication_classes = [authentication.TokenAuthentication]
+#     permission_classes = [permissions.IsUser]
+#
+#     def get(self, request, format=None):
+#         """
+#         Return a list of all users.
+#         """
+#         usernames = [user.username for user in User.objects.all()]
+#         return Response(usernames)
+
+# class UpRateRedirect(RedirectView):
+#     def get_redirect_url(self, *args, **kwargs):
+#         content_id = self.kwargs.get("content_id")
+#         rate = self.kwargs.get("rate")
+#         if rate == 0:
+#             bool = True
+#         else:
+#             bool = False
+#
+#         if not Rate.objects.filter(user=request.user.username, contentid=content_id, rate=bool):
+#             rating = Rate(user=request.user.username, contentid=content_id, rate=bool)
+#             rating.save()
+#         return reverse()
+def dorate(request, content_id, rating):
+    # Valid user check
+    if request.user.is_authenticated:
+        # Duplicate rate check
+        if not Rate.objects.filter(user=request.user.username, contentid=content_id, rate=rating):
+            if rating == 1:
+                Post.objects.filter(id=content_id).update(rating=F('rating')+1)
+            if rating == 0:
+                Post.objects.filter(id=content_id).update(rating=F('rating')-1)
+            # Creating rate object
+            if Rate.objects.filter(user=request.user.username, contentid=content_id, rate=(not rating)):
+                Rate.objects.filter(user=request.user.username, contentid=content_id, rate=(not rating)).delete()
+                if rating == 1:
+                    Post.objects.filter(id=content_id).update(rating=F('rating')+1)
+                if rating == 0:
+                    Post.objects.filter(id=content_id).update(rating=F('rating')-1)
+            Rate.objects.create(user=request.user.username, contentid=content_id, contentposter=Post.objects.get(id=content_id).poster, rate=rating)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

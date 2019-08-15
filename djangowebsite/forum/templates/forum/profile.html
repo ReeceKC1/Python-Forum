@@ -1,40 +1,67 @@
 {% extends "forum/base.html" %}
 {% load static %}
 {% block content %}
-    <div class="profile-page" align="center">
-        <fieldset>
-            <img class="profile-image" src="{{ profileuser.image.url }}">
-        </fieldset>
-        <fieldset class="profile-name">
+<div class="profile-page">
+    <div class="profile-data" align="center">
+
+        <img class="profile-image" src="{{ profileuser.image.url }}">
+
+        <div class="profile-name">
             <p> {{ profileuser.username }} </p>
-        </fieldset>
+        </div>
+        <a class="logout-ref" href="/logout/"><span title="Logout"><img class="logout-icon" src="{% static 'forum/logout.png' %}"></span></a>
     </div>
-
     <center>
-    <!-- HTML FOR POST OBJECT -->
-    {% for post in rated %}
-    <div class="profile-rates">
-            <div class="post-rates">
-                <button class="uprate-button">^</button>
-                <p><button class="downrate-button">^</button></p>
-            </div>
-            <div class="post-rate">
-                <p></p>
-                {{ post.rating }}
-            </div>
-            <p class="post-data">
-                <b class="post-title"> {{ post.title }} </b>
-                <small>
-                    by {{ post.poster }} on {{ post.date_posted }}
-                </small>
-            </p>
-            <img class="post-image" src="{% static 'forum/image.jpg' %}">
-    </div>
-    {% endfor %}
-    </center>
+    <div class="profile-rated-posts" >
+        <b class="rated-posts-text">Created and Rated Posts</b>
+        <!-- HTML FOR POST OBJECT -->
+        {% if rated %}
+        <div class="rated-posts">
+        {% for post in rated %}
+            <div class="post-obj">
+                <div class="buttons">
 
+                    <a href="uprate/{{post.id}}/0/" ><button type="button" class="uprate-button">^</button></a>
+                    <br>
+                    <a href="uprate/{{post.id}}/1/" ><button type="button" class="downrate-button">^</button></a>
+
+                </div>
+                <span title="Post {{ post.id }} by {{ post.poster }}">
+                <a href="{% url 'forum-post' post.id %}">
+
+                <div class="post-rate">
+                    <br/>
+                    {{ post.rating }}
+                </div>
+                <p class="post-data">
+                    <b class="post-title"> {{ post.title }} </b>
+                    <small>
+                        by {{ post.poster }} on {{ post.date_posted|date:'m/d/Y' }}
+                    </small>
+                </p>
+                {% if post.image %}
+                <img class="post-image" src="{{ post.image.url }}">
+                {% endif %}
+                </a>
+                </span>
+            </div>
+        {% endfor %}
+        </div>
+        {% else %}
+        <br>
+            None
+        {% endif %}
+    </div>
+    </center>
+</div>
 
 <style>
+    .profile-page{
+
+    }
+    .profile-data{
+        height: calc(50vh - 39px);
+    }
     .profile-name{
         font-size: 48px;
         margin-bottom: 20px;
@@ -47,55 +74,27 @@
         margin-bottom: 20px;
         object-fit: cover;
     }
-    /*CSS FOR POST OBJECTS*/
-    .profile-rates{
-        border: 2px solid grey;
+    .profile-rated-posts{
         width: 500px;
-        height: 60px;
-        text-align: left;
-        margin-bottom: 5px;
+        height: calc(50vh - 39px);
+        overflow: hidden;
     }
-    .post-data{
-        padding-left: 5px;
-        padding-right: 15px;
-        border-radius: 15px;
-    }
-    .post-title{
-        font-size: 24px;
-        padding-left: 5px;
-    }
-    .post-image{
-        float: right;
-        height: 54px;
-        width: 54px;
-        margin-top: -51px;
-        margin-right: 1px;
-    }
-    .post-rate{
+    .rated-posts-text{
         float: left;
-        padding-left: 3px;
-        padding-right: 3px;
+        height: 30px;
+        overflow: hidden;
     }
-    /*BUTTONS*/
-    .post-rates{
+    .rated-posts{
+        width: 100%;
         float: left;
-        height: 55px;
-        left: 15px;
+        height: calc(50vh - 39px - 30px);
+        overflow: auto;
+        border: 1px solid grey;
     }
-    .uprate-button,.downrate-button{
-        padding-left: 2px;
-        padding-right: 2px;
-        height: 28px;
-        background: hsla(210,12%,16%,1);
-        color: white;
-        border: none;
-    }
-    .downrate-button{
-        transform: scale(1,-1);
-    }
-    .uprate-button:active, .uprate-button:hover, .downrate-button:active, .downrate-button:hover{
-        background: white;
-        color: black;
+    .logout-icon{
+        margin-right: 10px;
+        height: 48px;
+        width: 48px;
     }
 </style>
 {% endblock content %}

@@ -1,16 +1,23 @@
 {% extends "forum/base.html" %}
+{% load static %}
 {% block content %}
-
-    <div class="post-details">
+<div class="post-page-data">
+    <div class="post-page-details">
         <img class="post-user-image" src="{{ userimage.url }}">
-        <b class="post-title"> {{ post.title }} </b>
-        <small> by {{ post.poster }} on {{ post.date_posted }}</small>
-        <p class="post-content"> {{ post.content }} </p>
+        <b class="post-page-title"> {{ post.title }} </b>
+        <small> by {{ post.poster }} on {{ post.date_posted|date:'m/d/Y' }}</small>
+        {% if post.content %}
+        <p class="post-page-content"> {{ post.content }} </p>
+        {% endif %}
         {% if post.image %}
         <center>
-            <img class="post-image" src="{{ post.image.url }}">
+            <img class="post-page-image" src="{{ post.image.url }}">
         </center>
         {% endif %}
+        <div class="comment-rate-data">
+            <a href="dorate/{{post.id}}/1/" class="uprate-button-post"><img src="{% static 'forum/uprate.png' %}" class="uprate-img-post"></a>
+            <a href="dorate/{{post.id}}/0/" class="downrate-button-post"><img src="{% static 'forum/downrate.jpg' %}" class="downrate-img-post"></a>
+        </div>
     </div>
     {% if user.is_authenticated %}
     <center>
@@ -23,20 +30,24 @@
     </div>
     </center>
     {% endif %}
+    <div class="comments">
+        {% for comment in comments %}
+        <div class="comment">
+            <img class="comment-image" src="{{ comment.1.url }}">
+            <div class="comment-body">
+                <small>by {{ comment.0.poster }}</small><br/>
+                {{ comment.0.content }}
+            </div>
 
-    {% for comment in comments %}
-    <div class="comment">
-        <img class="comment-image" src="{{ comment.1.url }}">
-        <div class="comment-body">
-            <small>by {{ comment.0.poster }}</small><br/>
-            {{ comment.0.content }}
         </div>
-
+        {% endfor %}
     </div>
-    {% endfor %}
-
+</div>
 <style>
-    .post-details{
+    .post-page-data{
+        width: 75hh;
+    }
+    .post-page-details{
         /* border: 2px solid grey; */
         border-radius: 6px;
         margin-bottom: 2px;
@@ -50,30 +61,56 @@
         margin-left: 2.5%;
         object-fit: cover;
     }
-    .post-title{
+    .post-page-title{
         font-size: 24px;
     }
-    .post-content{
+    .post-page-content{
         margin-left: 2.5%;
         margin-right: 2.5%;
         word-wrap: break-word;
     }
-    .post-image{
+    .post-page-image{
         align: center;
         width: 95%;
-        margin-bottom: 20px;
+        padding-bottom: 10px;
         margin-left: 2.5%;
         margin-right: 2.5%;
         object-fit: cover;
+    }
+    .comment-rate-data{
+        height: 30px;
+        margin-left: 2.5%;
+        margin-right: 2.5%;
+        overflow: hidden;
+    }
+    .uprate-button-post{
+        height: 30px;
+        width: 30px;
+        border: 1px solid grey;
+    }
+    .downrate-button-post{
+
+    }
+    .uprate-img-post{
+        height: 30px;
+        width: 30px;
+        /* padding: 3px; */
+
+    }
+    .downrate-img-post{
+
     }
 
     .enter-comment{
         padding-bottom: 10px;
         padding-top: 10px;
-        width: 95%;
+        margin-left: 2.5%;
+        margin-right: 2.5%;
     }
     .comment-data{
         width: 80%;
+        padding: 0;
+        margin: 0;
     }
     .comment-submit{
         width: 19%;
@@ -84,6 +121,9 @@
         font-size: 20px;
     }
 
+    .comments{
+        margin-bottom: 25px;
+    }
     .comment{
         /* border: 1px solid grey;
         border-radius: 6px; */

@@ -18,7 +18,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post_image',blank=True)
     content = models.TextField(blank=True, default='')
     date_posted = models.DateTimeField(default=timezone.now)
-    rating = models.IntegerField(default=0)
+    rating = models.IntegerField()
     tags = models.CharField(max_length=1000, default='')
     def __str__(self):
         return str(self.id)
@@ -34,7 +34,8 @@ class Comment(models.Model):
 class Rate(models.Model):
     id = models.AutoField(max_length=100, primary_key=True)
     user = models.CharField(max_length=32)
-    contentid = models.IntegerField()
+    contentid = models.IntegerField(default=0)
+    contentposter = models.CharField(max_length=32)
     rate = models.BooleanField()
     def __str__(self):
         return str(self.id)

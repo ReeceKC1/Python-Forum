@@ -1,11 +1,52 @@
 {% extends "forum/base.html" %}
 {% block content %}
-{{ user.username }}
+<center>
+<div class="settings-page">
+    <p class="settings-title">
+        Settings
+    </p>
 <form method="POST" enctype='multipart/form-data'>
     {% csrf_token %}
+    {% if content %}
+        <div class="error-message-settings">
+            {{ content }}
+        </div>
+    {% endif %}
     <input class="new-image-input"type="file" name="new-image">
-    <input class="old-password-input" type="text" name="old-password">
-    <input class="new-password-input" type="text" name="new-password">
-<button class="btn btn-secondary" type="submit">Register</button> <br/>
-{{ content }}
+    <input class="old-password-input" placeholder="Old Password" type="text" name="old-password">
+    <input class="new-password-input" placeholder="New Password" name="new-password">
+    <input class="new-password-conf" placeholder="New Password Confirm" name="new-password-conf">
+    <br/>
+    <button class="btn btn-secondary" type="submit">Save</button>
+
+</div>
+</center>
+
+<style>
+    .settings-page{
+        width: 400px;
+    }
+    .settings-title{
+        font-size: 32px;
+        margin
+    }
+    .new-image-input{
+        display:inline-block;
+        padding: 4px 12px;
+        background-color: #FFFFFF;
+        border:solid 1px #666F77;
+        border-radius: 6px;
+        color:#666F77;
+        margin-bottom: 25px;
+    }
+    .old-password-input, .new-password-input, .new-password-conf{
+        width: 395px;
+        height: 35px;
+        border:solid 1px #666F77;
+        border-radius: 6px;
+        padding-left: 10px;
+        margin-bottom: 25px;
+    }
+</style>
+
 {% endblock %}
