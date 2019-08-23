@@ -1,34 +1,33 @@
+<!-- Home page used for home page of website, uses SortForm -->
+
 {% extends "forum/base.html" %}
 {% load static %}
 {% block content %}
-
+<!-- Div for search bar and displaying post objects -->
 <div class="posts-data">
-
     <form method="POST">
     {% csrf_token %}
+    <!-- Filter bar for searching posts -->
     <div class="filter">
         <button class="filter-button" type="submit">Filter</button>
         <input class="filter-input" type="text" name="filter">
+        <div class="sortbar-div">
+            {{ form.sortchoice }}
+        </div>
     </div>
-
+    <!-- Div for displaying post objects -->
     <div class="home-posts">
         {% for post in posts %}
         <div class="post-obj">
             <div class="buttons">
-
-                <a href="dorate/{{post.id}}/1/" ><button type="button" class="uprate-button">^</button></a>
+                <a href="{% url 'forum-dorate' post.id 1 %}"><span title="Uprate"><img src="{% static 'forum/uprate-icon.png' %}" class="uprate-post-icon"></span></a>
                 <br>
-                <a href="dorate/{{post.id}}/0/" ><button type="button" class="downrate-button">^</button></a>
-
+                <a href="{% url 'forum-dorate' post.id 0 %}"><span title="Downrate"><img src="{% static 'forum/downrate-icon.png' %}" class="downrate-post-icon"></span></a>
             </div>
             <span title="Post {{ post.id }} by {{ post.poster }}">
             <a href="{% url 'forum-post' post.id %}">
-
-            <div class="post-rate">
-                <br/>
-                {{ post.rating }}
-            </div>
             <p class="post-data">
+                {{ post.rating }}
                 <b class="post-title"> {{ post.title }} </b>
                 <small>
                     by {{ post.poster }} on {{ post.date_posted|date:'m/d/Y' }}
@@ -43,18 +42,19 @@
         {% endfor %}
     </div>
 </div>
-
-
+<!-- Div for site name, image, user count, post count, and displaying users -->
 <div class="home-data">
+    <!-- Site data: site name, image, user count, post count -->
     <div class="site-data">
-        <img class="forum-image-home" src="{% static 'forum/forum-image.jpg' %}">
-        <b>Forum Page</b>
+        <img class="forum-image-home" src="{% static 'forum/logo.png' %}">
+        <b>Zz Forums</b>
         <br>
         <center>
         <small><font color="red">{{ totalusers }}</font> Users</small>
         <small><font color="red">{{ totalposts }}</font> Posts</small>
         </center>
     </div>
+    <!-- Site users displayed -->
     <div class="usertabs">
     {% for usertab in users %}
         <span title="User {{ usertab.0.username }}">
@@ -63,7 +63,7 @@
             <img class="usertab-image" src="{{ usertab.0.image.url }}">
             <p class="usertab-username">{{ usertab.0.username }}</p>
             <!-- Total uprates -->
-            <p class="usertab-rates"><small>{{usertab.1}} Posts</small></p>
+            <p class="usertab-rates"><small>Rating: {{usertab.1}}</small></p>
         </div>
         </a>
         </span>
@@ -71,25 +71,15 @@
     </div>
 </div>
 
-
 <style>
-    .home-data{
-        width: 20%;
-        height: calc(100vh - 53px - 25px);
-        float: left;
-        /* float: right; */
-
-        margin-top: 3px;
-    }
+    /* Filter bar, sort options, and posts */
     .posts-data{
         float: left;
         width: 80%;
         height: calc(100vh - 53px - 25px);
-        /* overflow: hidden; */
         margin-top: 2px;
     }
-
-
+    /* Filter bar and sort options */
     .filter{
         width: 100%;
         margin-bottom: 2px;
@@ -98,7 +88,7 @@
         height: 50px;
     }
     .filter-input{
-        width: 84%;
+        width: calc(85% - 90px);
         transform: translateY(25%);
     }
     .filter-button{
@@ -110,7 +100,19 @@
         font-size: 20px;
         transform: translateY(25%);
     }
-
+    .sortbar-div{
+        width: 81px;
+        float: right;
+        margin-top: 9px;
+    }
+    .sortbar{
+        height: 35px;
+        float: right;
+        background: hsla(210,12%,16%,1);
+        color: white;
+        border: 0px;
+    }
+    /* Post object section */
     .home-posts{
         width: 100%;
         height: calc(100vh - 50px - 53px - 25px);
@@ -119,6 +121,13 @@
         border: 1px solid grey;
     }
 
+    /* Section for site data and user tabs */
+    .home-data{
+        width: 20%;
+        height: calc(100vh - 53px - 25px);
+        float: left;
+        margin-top: 3px;
+    }
     /* User tabs */
     .usertabs{
         border: 1px solid grey;
@@ -145,14 +154,11 @@
     }
     .usertab-username{
         margin: 0;
-
     }
     .usertab-rates{
         line-height: .5;
     }
-
-
-
+    /* Site data: site name, image, user count, and post count */
     .site-data{
         width: 100%;
         height: 75px;

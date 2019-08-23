@@ -1,3 +1,5 @@
+<!-- Page for changing User settings, uses -->
+
 {% extends "forum/base.html" %}
 {% block content %}
 <center>
@@ -7,18 +9,20 @@
     </p>
 <form method="POST" enctype='multipart/form-data'>
     {% csrf_token %}
-    {% if content %}
+    <!-- Error messages from User input -->
+    {% if error %}
         <div class="error-message-settings">
-            {{ content }}
+            {{ error }}
         </div>
+        <br>
     {% endif %}
-    <input class="new-image-input"type="file" name="new-image">
-    <input class="old-password-input" placeholder="Old Password" type="text" name="old-password">
-    <input class="new-password-input" placeholder="New Password" name="new-password">
-    <input class="new-password-conf" placeholder="New Password Confirm" name="new-password-conf">
+    <!-- Input for User data changes, must be validated by old password -->
+    <input class="new-image-input" type="file" name="newimage"><br>
+    <input class="old-password-input" placeholder="Old Password" type="password" name="old-password">
+    <input class="new-password-input" placeholder="New Password" type="password" name="new-password">
+    <input class="new-password-conf" placeholder="New Password Confirm" type="password" name="new-password-conf">
     <br/>
     <button class="btn btn-secondary" type="submit">Save</button>
-
 </div>
 </center>
 
@@ -28,7 +32,6 @@
     }
     .settings-title{
         font-size: 32px;
-        margin
     }
     .new-image-input{
         display:inline-block;
@@ -46,6 +49,9 @@
         border-radius: 6px;
         padding-left: 10px;
         margin-bottom: 25px;
+    }
+    .error-message-settings{
+        color: red;
     }
 </style>
 

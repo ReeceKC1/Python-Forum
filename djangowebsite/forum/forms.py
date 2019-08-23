@@ -1,28 +1,25 @@
-from django import forms
-from .models import ForumUser, Post, Comment
 from django.utils.translation import gettext_lazy as _
+from .models import ForumUser, Post, Comment
+from django import forms
 
-class RegisterForm(forms.ModelForm):
-    class Meta:
-        model = ForumUser
-        fields = [
-            'username',
-            'password',
-            'image',
-        ]
+# Page used for forms used to gather data from Users
 
-        widgets = {
-            'username': forms.TextInput(
-                attrs={
-                    'placeholder': 'Username',
-                    'class': 'register-name',
-                }),
-            'pasword': forms.PasswordInput(),
-            'image': forms.FileInput(
-                attrs={
-                    'class': 'register-image',
-                }),
-        }
+# Choices for home page sorting, used in SortForm
+SORT_CHOICES = (
+    (0, _("Sort")),
+    (1, _("Date")),
+    (2, _("Rates")),
+    (3, _("Title")),
+    (4, _("Poster"))
+)
+
+# Form for getting profile picture for users, used on Register and Settings page
+class ImageForm(forms.Form):
+    newimage = forms.ImageField(required=False)
+
+# Form for sort options in site Home page
+class SortForm(forms.Form):
+    sortchoice = forms.ChoiceField(choices=SORT_CHOICES,initial='0',widget=forms.Select(attrs={'class': 'sortbar', 'onchange': "form.submit();",}))
 
 class ModifyUserForm(forms.ModelForm):
     class Meta:
@@ -33,6 +30,7 @@ class ModifyUserForm(forms.ModelForm):
             'image'
         ]
 
+# Form used for creation of Post objects, used on Createpost page
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
@@ -64,6 +62,7 @@ class PostForm(forms.ModelForm):
                 }),
         }
 
+# Form used for creating of Comment objects, used on Post pages
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment

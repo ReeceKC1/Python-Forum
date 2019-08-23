@@ -1,54 +1,68 @@
+<!-- Page for viewing Post object, uses CommentForm -->
+
 {% extends "forum/base.html" %}
 {% load static %}
 {% block content %}
 <div class="post-page-data">
+    <!-- Post data -->
     <div class="post-page-details">
         <img class="post-user-image" src="{{ userimage.url }}">
         <b class="post-page-title"> {{ post.title }} </b>
         <small> by {{ post.poster }} on {{ post.date_posted|date:'m/d/Y' }}</small>
         {% if post.content %}
-        <p class="post-page-content"> {{ post.content }} </p>
+            <p class="post-page-content"> {{ post.content }} </p>
         {% endif %}
         {% if post.image %}
-        <center>
-            <img class="post-page-image" src="{{ post.image.url }}">
-        </center>
+            <center>
+                <img class="post-page-image" src="{{ post.image.url }}">
+            </center>
         {% endif %}
+        <!-- Post rating, rate buttons, and total comments -->
         <div class="comment-rate-data">
-            <a href="dorate/{{post.id}}/1/" class="uprate-button-post"><img src="{% static 'forum/uprate.png' %}" class="uprate-img-post"></a>
-            <a href="dorate/{{post.id}}/0/" class="downrate-button-post"><img src="{% static 'forum/downrate.jpg' %}" class="downrate-img-post"></a>
+            <!-- <a href="{% url 'forum-dorate' post.id 1 %}"><button type="button" class="uprate-button-post">^</button></a> -->
+            <a href="{% url 'forum-dorate' post.id 1 %}"><span title="Uprate"><img src="{% static 'forum/uprate-icon.png' %}" class="uprate-image-post"></span></a>
+            <div class="post-page-rating">
+                {{ post.rating }}
+            </div>
+            <a href="{% url 'forum-dorate' post.id 0 %}"><span title="Downrate"><img src="{% static 'forum/downrate-icon.png' %}" class="downrate-image-post"></span></a>
+            <div class="comment-count">
+                {{ commentcount }} Comments
+            </div>
         </div>
     </div>
+    <!-- If user is logged in, display comment input -->
     {% if user.is_authenticated %}
-    <center>
-    <div class="enter-comment">
-        <form  method="POST" enctype='multipart/form-data'>
-            {% csrf_token %}
-        <button class="comment-submit" type="submit">Comment</button>
-        {{ form.content }}
-        </form>
-    </div>
-    </center>
+        <center>
+        <div class="enter-comment">
+            <form  method="POST" enctype='multipart/form-data'>
+                {% csrf_token %}
+            <button class="comment-submit" type="submit">Comment</button>
+            {{ form.content }}
+            </form>
+        </div>
+        </center>
     {% endif %}
+    <!-- Comment section -->
     <div class="comments">
         {% for comment in comments %}
-        <div class="comment">
-            <img class="comment-image" src="{{ comment.1.url }}">
-            <div class="comment-body">
-                <small>by {{ comment.0.poster }}</small><br/>
-                {{ comment.0.content }}
+            <div class="comment">
+                <img class="comment-image" src="{{ comment.1.url }}">
+                <div class="comment-body">
+                    <small>by {{ comment.0.poster }}</small><br/>
+                    {{ comment.0.content }}
+                </div>
             </div>
-
-        </div>
         {% endfor %}
     </div>
 </div>
 <style>
+    /* CSS for Post page */
     .post-page-data{
         width: 75hh;
     }
+
+    /* CSS for Post object data */
     .post-page-details{
-        /* border: 2px solid grey; */
         border-radius: 6px;
         margin-bottom: 2px;
     }
@@ -77,35 +91,42 @@
         margin-right: 2.5%;
         object-fit: cover;
     }
+
+    /* CSS for Post rating, rate buttons, and comment counnt */
     .comment-rate-data{
-        height: 30px;
+        height: 28px;
         margin-left: 2.5%;
         margin-right: 2.5%;
         overflow: hidden;
     }
-    .uprate-button-post{
-        height: 30px;
-        width: 30px;
-        border: 1px solid grey;
+    .post-page-rating{
+        float: left;
+        margin-left: 5px;
+        margin-right: 5px;
     }
-    .downrate-button-post{
-
+    .uprate-image-post, .downrate-image-post{
+        width: 20px;
+        height: 20px;
+        display: block;
+        float: left;
     }
-    .uprate-img-post{
-        height: 30px;
-        width: 30px;
-        /* padding: 3px; */
-
+    .uprate-image-post{
+        margin-top: 3px;
     }
-    .downrate-img-post{
-
+    .downrate-image-post{
+        margin-top: 7px;
+    }
+    .comment-count{
+        float: right;
     }
 
+    /* CSS for Comment objects */
     .enter-comment{
         padding-bottom: 10px;
         padding-top: 10px;
         margin-left: 2.5%;
         margin-right: 2.5%;
+        margin-bottom: 25px;
     }
     .comment-data{
         width: 80%;
@@ -120,17 +141,14 @@
         color: white;
         font-size: 20px;
     }
-
     .comments{
         margin-bottom: 25px;
     }
     .comment{
-        /* border: 1px solid grey;
-        border-radius: 6px; */
         margin-bottom: 10px;
         width: 100%;
         margin-left: 2.5%;
-        margin-right: 2.5%
+        margin-right: 2.5%;
     }
     .comment-image{
         height: 40px;
@@ -142,7 +160,7 @@
     .comment-body{
         width: 100%;
         padding-left: 50px;
-        padding-right: 10px;
+        padding-right: 5%;
         word-wrap: break-word;
     }
 </style>

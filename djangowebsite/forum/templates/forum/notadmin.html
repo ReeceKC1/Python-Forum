@@ -1,0 +1,20 @@
+<!-- Page used for bad access to admin page if user is not admin -->
+
+{% extends "forum/base.html" %}
+{% block content %}
+<div class="not-admin-page">
+    <center>
+    <div class="not-admin-text">
+        Admin Only Page
+    </div>
+    </center>
+</div>
+
+<style>
+    .not-admin-text{
+        margin-top: 30px;
+        font-size: 32px;
+    }
+</style>
+
+{% endblock content %}

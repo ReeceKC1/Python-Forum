@@ -1,39 +1,36 @@
+<!-- Profile page for logged in user -->
+
 {% extends "forum/base.html" %}
 {% load static %}
 {% block content %}
 <div class="profile-page">
+    <!-- Data for logged in user -->
     <div class="profile-data" align="center">
-
         <img class="profile-image" src="{{ profileuser.image.url }}">
-
         <div class="profile-name">
             <p> {{ profileuser.username }} </p>
         </div>
-        <a class="logout-ref" href="/logout/"><span title="Logout"><img class="logout-icon" src="{% static 'forum/logout.png' %}"></span></a>
+        <!-- Logout button -->
+        <a class="logout-ref" href="{% url 'forum-logout' %}"><span title="Logout"><img class="logout-icon" src="{% static 'forum/logout.png' %}"></span></a>
     </div>
     <center>
     <div class="profile-rated-posts" >
         <b class="rated-posts-text">Created and Rated Posts</b>
         <!-- HTML FOR POST OBJECT -->
         {% if rated %}
+        <!-- Displaying of rated and Posts by user -->
         <div class="rated-posts">
         {% for post in rated %}
             <div class="post-obj">
                 <div class="buttons">
-
-                    <a href="uprate/{{post.id}}/0/" ><button type="button" class="uprate-button">^</button></a>
+                    <a href="{% url 'forum-dorate' post.id 1 %}"><span title="Uprate"><img src="{% static 'forum/uprate-icon.png' %}" class="uprate-post-icon"></span></a>
                     <br>
-                    <a href="uprate/{{post.id}}/1/" ><button type="button" class="downrate-button">^</button></a>
-
+                    <a href="{% url 'forum-dorate' post.id 0 %}"><span title="Downrate"><img src="{% static 'forum/downrate-icon.png' %}" class="downrate-post-icon"></span></a>
                 </div>
                 <span title="Post {{ post.id }} by {{ post.poster }}">
                 <a href="{% url 'forum-post' post.id %}">
-
-                <div class="post-rate">
-                    <br/>
-                    {{ post.rating }}
-                </div>
                 <p class="post-data">
+                    {{ post.rating }}
                     <b class="post-title"> {{ post.title }} </b>
                     <small>
                         by {{ post.poster }} on {{ post.date_posted|date:'m/d/Y' }}
@@ -47,6 +44,7 @@
             </div>
         {% endfor %}
         </div>
+        <!-- If the user has no posts or rated posts -->
         {% else %}
         <br>
             None
@@ -56,9 +54,7 @@
 </div>
 
 <style>
-    .profile-page{
-
-    }
+    /* CSS of data for logged in user */
     .profile-data{
         height: calc(50vh - 39px);
     }
@@ -74,6 +70,15 @@
         margin-bottom: 20px;
         object-fit: cover;
     }
+
+    /* CSS for logout icon */
+    .logout-icon{
+        margin-right: 10px;
+        height: 48px;
+        width: 48px;
+    }
+
+    /* CSS for Posts */
     .profile-rated-posts{
         width: 500px;
         height: calc(50vh - 39px);
@@ -90,11 +95,6 @@
         height: calc(50vh - 39px - 30px);
         overflow: auto;
         border: 1px solid grey;
-    }
-    .logout-icon{
-        margin-right: 10px;
-        height: 48px;
-        width: 48px;
     }
 </style>
 {% endblock content %}

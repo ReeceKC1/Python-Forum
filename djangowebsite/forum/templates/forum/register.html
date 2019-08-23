@@ -1,22 +1,35 @@
+<!-- Page for registering Users, uses ImageForm -->
+
 {% extends "forum/base.html" %}
 {% load widget_tweaks %}
 {% block content %}
 <center>
-    <div class="register-content">
-        <form method="POST" enctype='multipart/form-data'>
-            {% csrf_token %}
-                <p class="register-heading">Register</p>
-                {{ form.image }}<br/>
-                {{ form.username }}<br/>
-                <input type="password" class="register-password" placeholder="Password" id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}"/><br/>
-                <button class="btn btn-secondary" type="submit">Register</button> <br/>
-                <small class="text-muted">
-                    Already have an account? <a class="regitser-link-login" href="{% url 'forum-login' %}">Login</a>
-                </small>
-        </form>
-    </div>
+<div class="register-content">
+    <form method="POST" enctype='multipart/form-data'>
+        {% csrf_token %}
+            <p class="register-heading">Register</p>
+            <!-- Error messages for User input -->
+            {% if error %}
+                <div class="error-message-register">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <!-- Input for User model fields -->
+            <input class="register-image" type="file" name="newimage"><br>
+            <input class="register-username" type="text" name="register-username" placeholder="Username"><br>
+            <input class="register-password" type="password" name="register-password" placeholder="Password"><br>
+            <input class="register-password-conf" type="password" name="register-password-conf" placeholder="Password Confirm"><br>
+            <button class="btn btn-secondary" type="submit">Register</button> <br/>
+            <!-- Link to login page -->
+            <small class="text-muted">
+                Already have an account? <a class="regitser-link-login" href="{% url 'forum-login' %}">Login</a>
+            </small>
+    </form>
+</div>
 </center>
-<style media="screen">
+
+<style>
+    /* CSS form Register input */
     .btn{
         margin-bottom: 10px;
     }
@@ -31,16 +44,27 @@
         border-radius: 6px;
         color:#666F77;
     }
-    .register-image, .register-name, .register-password{
+    .register-image, .register-username, .register-password, .register-password-conf{
         margin-bottom: 25px;
     }
-    .register-name, .register-password{
+    .register-username, .register-password, .register-password-conf{
         width: 395px;
         height: 35px;
         border:solid 1px #666F77;
         border-radius: 6px;
         padding-left: 10px;
     }
-
+    /* CSS for Login link */
+    .regitser-link-login, .regitser-link-login:visited, .regitser-link-login:link, .regitser-link-login:active {
+        color: dodgerblue;
+        text-decoration: underline;
+    }
+    .regitser-link-login:hover{
+        color: steelblue;
+        text-decoration: underline;
+    }
+    .error-message-register{
+        color: red;
+    }
 </style>
 {% endblock content %}

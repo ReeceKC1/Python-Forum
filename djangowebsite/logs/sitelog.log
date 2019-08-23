@@ -1,0 +1,138 @@
+2019-08-18 15:03:23,730 [INFO] run_with_reloader: Watching for file changes with StatReloader
+2019-08-18 15:03:35,148 [ERROR] log_response: Internal Server Error: /
+Traceback (most recent call last):
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\db\backends\sqlite3\base.py", line 383, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.OperationalError: no such table: forum_forumuser
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "F:\Coding\Python\Django Website\djangowebsite\forum\views.py", line 53, in home
+    ForumUser.objects.all()
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\db\models\query.py", line 274, in __iter__
+    self._fetch_all()
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\db\models\query.py", line 1242, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\db\models\query.py", line 55, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\db\models\sql\compiler.py", line 1100, in execute_sql
+    cursor.execute(sql, params)
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\db\backends\utils.py", line 99, in execute
+    return super().execute(sql, params)
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\db\backends\utils.py", line 76, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\db\utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "F:\Software\Python 3.7.2\lib\site-packages\django\db\backends\sqlite3\base.py", line 383, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.OperationalError: no such table: forum_forumuser
+2019-08-18 15:04:36,247 [INFO] run_with_reloader: Watching for file changes with StatReloader
+2019-08-18 15:04:53,186 [INFO] run_with_reloader: Watching for file changes with StatReloader
+2019-08-18 15:05:50,052 [DEBUG] init: Importing BlpImagePlugin
+2019-08-18 15:05:50,053 [DEBUG] init: Importing BmpImagePlugin
+2019-08-18 15:05:50,053 [DEBUG] init: Importing BufrStubImagePlugin
+2019-08-18 15:05:50,054 [DEBUG] init: Importing CurImagePlugin
+2019-08-18 15:05:50,055 [DEBUG] init: Importing DcxImagePlugin
+2019-08-18 15:05:50,057 [DEBUG] init: Importing DdsImagePlugin
+2019-08-18 15:05:50,058 [DEBUG] init: Importing EpsImagePlugin
+2019-08-18 15:05:50,108 [DEBUG] init: Importing FitsStubImagePlugin
+2019-08-18 15:05:50,109 [DEBUG] init: Importing FliImagePlugin
+2019-08-18 15:05:50,109 [DEBUG] init: Importing FpxImagePlugin
+2019-08-18 15:05:50,111 [DEBUG] init: Image: failed to import FpxImagePlugin: No module named 'olefile'
+2019-08-18 15:05:50,111 [DEBUG] init: Importing FtexImagePlugin
+2019-08-18 15:05:50,112 [DEBUG] init: Importing GbrImagePlugin
+2019-08-18 15:05:50,113 [DEBUG] init: Importing GifImagePlugin
+2019-08-18 15:05:50,113 [DEBUG] init: Importing GribStubImagePlugin
+2019-08-18 15:05:50,113 [DEBUG] init: Importing Hdf5StubImagePlugin
+2019-08-18 15:05:50,114 [DEBUG] init: Importing IcnsImagePlugin
+2019-08-18 15:05:50,116 [DEBUG] init: Importing IcoImagePlugin
+2019-08-18 15:05:50,117 [DEBUG] init: Importing ImImagePlugin
+2019-08-18 15:05:50,119 [DEBUG] init: Importing ImtImagePlugin
+2019-08-18 15:05:50,121 [DEBUG] init: Importing IptcImagePlugin
+2019-08-18 15:05:50,122 [DEBUG] init: Importing JpegImagePlugin
+2019-08-18 15:05:50,122 [DEBUG] init: Importing Jpeg2KImagePlugin
+2019-08-18 15:05:50,122 [DEBUG] init: Importing McIdasImagePlugin
+2019-08-18 15:05:50,123 [DEBUG] init: Importing MicImagePlugin
+2019-08-18 15:05:50,125 [DEBUG] init: Image: failed to import MicImagePlugin: No module named 'olefile'
+2019-08-18 15:05:50,126 [DEBUG] init: Importing MpegImagePlugin
+2019-08-18 15:05:50,127 [DEBUG] init: Importing MpoImagePlugin
+2019-08-18 15:05:50,129 [DEBUG] init: Importing MspImagePlugin
+2019-08-18 15:05:50,131 [DEBUG] init: Importing PalmImagePlugin
+2019-08-18 15:05:50,133 [DEBUG] init: Importing PcdImagePlugin
+2019-08-18 15:05:50,134 [DEBUG] init: Importing PcxImagePlugin
+2019-08-18 15:05:50,134 [DEBUG] init: Importing PdfImagePlugin
+2019-08-18 15:05:50,142 [DEBUG] init: Importing PixarImagePlugin
+2019-08-18 15:05:50,143 [DEBUG] init: Importing PngImagePlugin
+2019-08-18 15:05:50,143 [DEBUG] init: Importing PpmImagePlugin
+2019-08-18 15:05:50,143 [DEBUG] init: Importing PsdImagePlugin
+2019-08-18 15:05:50,144 [DEBUG] init: Importing SgiImagePlugin
+2019-08-18 15:05:50,145 [DEBUG] init: Importing SpiderImagePlugin
+2019-08-18 15:05:50,146 [DEBUG] init: Importing SunImagePlugin
+2019-08-18 15:05:50,147 [DEBUG] init: Importing TgaImagePlugin
+2019-08-18 15:05:50,148 [DEBUG] init: Importing TiffImagePlugin
+2019-08-18 15:05:50,148 [DEBUG] init: Importing WebPImagePlugin
+2019-08-18 15:05:50,150 [DEBUG] init: Importing WmfImagePlugin
+2019-08-18 15:05:50,151 [DEBUG] init: Importing XbmImagePlugin
+2019-08-18 15:05:50,154 [DEBUG] init: Importing XpmImagePlugin
+2019-08-18 15:05:50,156 [DEBUG] init: Importing XVThumbImagePlugin
+2019-08-18 15:05:50,407 [DEBUG] register: User test created
+2019-08-18 15:06:21,209 [DEBUG] createPost: Post created by test with ID: 1
+2019-08-18 15:06:26,984 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-08-18 15:06:46,143 [DEBUG] register: User test2 created
+2019-08-18 15:06:50,568 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-08-18 15:07:27,890 [DEBUG] postview: Comment with ID: 1 created
+2019-08-18 15:07:48,511 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-18 15:07:56,340 [DEBUG] loginuser: User test logged in
+2019-08-18 15:07:58,196 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-18 15:11:15,477 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-08-18 15:11:16,381 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-18 15:11:17,491 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-08-18 15:11:18,760 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-18 15:11:30,612 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-08-18 15:11:31,420 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-18 15:11:45,874 [DEBUG] loginuser: User test logged in
+2019-08-18 15:12:17,550 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-08-18 15:12:18,115 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-18 15:12:19,492 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-08-18 15:12:20,445 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-18 15:12:29,106 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-08-18 15:12:30,030 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-18 15:12:30,905 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-08-18 15:12:31,589 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-18 15:12:37,703 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-08-18 15:12:38,493 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-18 15:12:39,297 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-08-18 15:12:39,924 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-18 15:12:40,560 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-08-18 15:12:41,576 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-18 15:14:27,747 [DEBUG] admin: test accessed the admin page
+2019-08-18 15:14:28,838 [DEBUG] removecomment: Comment with ID: 1 deleted
+2019-08-18 15:14:28,863 [DEBUG] admin: test accessed the admin page
+2019-08-18 15:16:40,812 [DEBUG] postview: Comment with ID: 2 created
+2019-08-21 21:14:55,481 [INFO] run_with_reloader: Watching for file changes with StatReloader
+2019-08-21 21:15:20,676 [DEBUG] register: User  jkhsadb created
+2019-08-21 21:15:32,620 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-21 21:15:33,651 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-08-21 21:15:34,861 [DEBUG] dorate: Rate created for post ID: 1 with rating 0
+2019-08-21 21:15:40,116 [DEBUG] postview: Comment with ID: 3 created
+2019-08-21 21:15:58,051 [DEBUG] loginuser: User test logged in
+2019-08-21 21:15:59,163 [DEBUG] admin: test accessed the admin page
+2019-08-21 21:16:02,167 [DEBUG] removeuser: Comment with ID: 3 deleted
+2019-08-21 21:16:02,298 [DEBUG] removeuser: Rate with ID: 27 deleted
+2019-08-21 21:16:02,334 [DEBUG] removeuser: User with ID:  jkhsadb deleted
+2019-08-21 21:16:02,344 [DEBUG] admin: test accessed the admin page

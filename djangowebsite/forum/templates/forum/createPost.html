@@ -1,9 +1,12 @@
+<!-- Page for creation of post objects, Uses PostForm -->
+
 {% extends "forum/base.html" %}
 {% block content %}
 <center>
     <div class="postcreate-content">
         <form method="POST" enctype='multipart/form-data'>
             {% csrf_token %}
+            <!-- Displaying PostForm Fields -->
             <p class="postcreate-heading">Create a Post</p>
             {{ form.errors }}
             {{ form.title }} <br/>
@@ -14,6 +17,7 @@
         </form>
     </div>
 </center>
+
 <style>
     .btn{
         margin-bottom: 25px;

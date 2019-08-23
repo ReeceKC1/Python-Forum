@@ -8,11 +8,9 @@ admin.site.register(ForumUser)
 admin.site.register(Post)
 admin.site.register(Comment)
 admin.site.register(Rate)
-admin.site.register(Tag)
 
 
 class CustomUserAdmin(UserAdmin):
-    add_form = RegisterForm
     form = ModifyUserForm
     model = ForumUser
     list_display = ['username',]

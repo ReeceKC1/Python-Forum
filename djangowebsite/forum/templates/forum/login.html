@@ -1,3 +1,5 @@
+<!-- Page for logging in users, uses custom errors -->
+
 {% extends "forum/base.html" %}
 {% block content %}
 <center>
@@ -5,33 +7,50 @@
         <p class="login-title">Login</p>
         <form method="post" >
             {% csrf_token %}
-            <input type="text" class="form-name" placeholder="Username" id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}"/>
+            <!-- Errors for user input -->
+            {% if error %}
+                <div class="error-message-login">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <!-- Login field inputs -->
+            <input type="text" class="form-name" placeholder="Username" name="login-username"/>
             <br/>
-            <input type="password" class="form-password" placeholder="Password" id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}"/>
+            <input type="password" class="form-password" placeholder="Password" name="login-password"/>
             <br/>
             <button class="btn btn-secondary" type="submit">Login</button> <br/>
-
+            <!-- Link to register page -->
             <small class="text-muted">
-                Don't have an account? <a class="reigtser-link-login" href="{% url 'forum-register' %}">Register Now</a>
+                Don't have an account? <a class="regitser-link-login" href="{% url 'forum-register' %}">Register Now</a>
             </small>
         </form>
     </div>
 </center>
 <style>
-.btn{
-    margin-bottom: 10px;
-}
-.form-name, .form-password{
-    width: 320px;
-    height: 35px;
-    border:solid 1px #666F77;
-    border-radius: 6px;
-    padding-left: 10px;
-    margin-bottom: 25px;
-}
-.login-title{
-    font-size: 32px;
-}
-
+    .btn{
+        margin-bottom: 10px;
+    }
+    .form-name, .form-password{
+        width: 320px;
+        height: 35px;
+        border:solid 1px #666F77;
+        border-radius: 6px;
+        padding-left: 10px;
+        margin-bottom: 25px;
+    }
+    .login-title{
+        font-size: 32px;
+    }
+    .regitser-link-login, .regitser-link-login:visited, .regitser-link-login:link, .regitser-link-login:active {
+        color: dodgerblue;
+        text-decoration: underline;
+    }
+    .regitser-link-login:hover{
+        color: steelblue;
+        text-decoration: underline;
+    }
+    .error-message-login{
+        color: red;
+    }
 </style>
 {% endblock content %}
