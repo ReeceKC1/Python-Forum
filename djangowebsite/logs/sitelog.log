@@ -136,3 +136,19 @@ django.db.utils.OperationalError: no such table: forum_forumuser
 2019-08-21 21:16:02,298 [DEBUG] removeuser: Rate with ID: 27 deleted
 2019-08-21 21:16:02,334 [DEBUG] removeuser: User with ID:  jkhsadb deleted
 2019-08-21 21:16:02,344 [DEBUG] admin: test accessed the admin page
+2019-09-02 16:48:43,970 [INFO] run_with_reloader: Watching for file changes with StatReloader
+2019-09-02 16:48:57,659 [DEBUG] register: User test created
+2019-09-02 16:49:31,530 [WARNING] log_response: Forbidden (CSRF token missing or incorrect.): /register/
+2019-09-02 16:49:31,915 [WARNING] log_response: Not Found: /favicon.ico
+2019-09-02 17:08:58,335 [DEBUG] createPost: Post created by test with ID: 1
+2019-09-02 17:09:07,692 [DEBUG] createPost: Post created by test with ID: 2
+2019-09-02 17:10:30,046 [DEBUG] register: User yegy created
+2019-09-02 17:10:49,811 [DEBUG] loginuser: User test logged in
+2019-09-02 17:29:08,501 [DEBUG] createPost: Post created by test with ID: 3
+2019-09-02 17:29:15,321 [DEBUG] createPost: Post created by test with ID: 4
+2019-09-02 17:29:22,774 [DEBUG] createPost: Post created by test with ID: 5
+2019-09-02 17:29:30,774 [DEBUG] createPost: Post created by test with ID: 6
+2019-09-02 17:29:38,195 [DEBUG] createPost: Post created by test with ID: 7
+2019-09-02 17:29:45,454 [DEBUG] createPost: Post created by test with ID: 8
+2019-09-02 17:34:00,798 [DEBUG] dorate: Rate created for post ID: 1 with rating 1
+2019-09-02 17:34:03,641 [DEBUG] dorate: Rate created for post ID: 2 with rating 1
