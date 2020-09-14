@@ -1,7 +1,7 @@
 # Python-Forum
 A forum website created using the Django framework.
 
-Access the home page by going to www.zzforums.com
+Access the home page by going to www.zzforums.reecekc.com
 
 Keys used for encryption have been removed from the project for data security.
 
