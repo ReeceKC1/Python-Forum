@@ -4,7 +4,7 @@ cryptography==2.7
 Django==2.2.1
 django-encrypted-model-fields==0.5.8
 django-widget-tweaks==1.4.5
-Pillow==6.0.0
+Pillow==8.2.0
 pycparser==2.19
 pytz==2019.1
 six==1.12.0
